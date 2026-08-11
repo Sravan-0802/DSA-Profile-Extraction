@@ -15,3 +15,36 @@ deploymentTarget = "autoscale"
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[userenv]
+
+[userenv.shared]
+CORS_ORIGINS = "*"
+DEFAULT_CONCURRENCY = "8"
+ENABLE_OCR = "false"
+MAX_CONCURRENCY = "20"
+MISTRAL_MODEL = "mistral-large-latest"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash scripts/start.sh"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
