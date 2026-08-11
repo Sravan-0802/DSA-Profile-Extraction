@@ -7,7 +7,13 @@ backend/.env
 # Node
 frontend/node_modules/
 frontend/dist/
+frontend/tsconfig.tsbuildinfo
 
 # Misc
 .DS_Store
 *.log
+
+# Replit
+.cache/
+.local/
+.config/

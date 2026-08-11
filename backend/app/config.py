@@ -71,10 +71,14 @@ class Settings:
         self.cors_origins: list[str] = [
             o.strip()
             for o in os.getenv(
-                "CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173"
+                "CORS_ORIGINS",
+                "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5000,http://127.0.0.1:5000",
             ).split(",")
             if o.strip()
         ]
+        # Same-origin deployed apps (Replit) don't need CORS; "*" is safe when set explicitly.
+        if self.cors_origins == ["*"]:
+            self.cors_origins = ["*"]
 
     @property
     def has_ai(self) -> bool:

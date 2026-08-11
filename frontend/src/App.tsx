@@ -26,7 +26,7 @@ export default function App() {
         setConfig(c);
         setConcurrency(c.default_concurrency);
       })
-      .catch(() => setConfigError("Could not reach the backend at /api. Is it running on port 8000?"));
+      .catch(() => setConfigError("Could not reach the backend at /api. Is the server running?"));
   }, []);
 
   useEffect(() => {

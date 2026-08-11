@@ -1,0 +1,16 @@
+# Replit: one public port only (publish rejects multiple external ports).
+run = "bash scripts/start.sh"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["bash", "scripts/start.sh"]
+# Autoscale publishes on Starter; Reserved VM keeps in-memory jobs across idle
+# periods but needs Core/Pro/Enterprise. Prefer Autoscale unless you need
+# long-lived job state between idle pauses.
+deploymentTarget = "autoscale"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
