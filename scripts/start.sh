@@ -13,7 +13,7 @@ echo "==> Building frontend"
 (cd frontend && npm run build)
 
 echo "==> Installing backend deps"
-python3 -m pip install -r backend/requirements.txt
+python3 -m pip install --break-system-packages -r backend/requirements.txt
 
 PORT="${PORT:-5000}"
 echo "==> Starting server on 0.0.0.0:${PORT}"
