@@ -13,6 +13,6 @@ echo "==> Building frontend"
 (cd frontend && npm run build)
 
 echo "==> Installing backend deps"
-python3 -m pip install -r backend/requirements.txt
+python3 -m pip install --break-system-packages -r backend/requirements.txt
 
 echo "==> Build complete"
