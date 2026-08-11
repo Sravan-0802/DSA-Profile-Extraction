@@ -6,11 +6,9 @@ modules = ["python-3.12", "nodejs-20", "web", "bash"]
 channel = "stable-25_05"
 
 [deployment]
-run = ["bash", "scripts/start.sh"]
-# Autoscale publishes on Starter; Reserved VM keeps in-memory jobs across idle
-# periods but needs Core/Pro/Enterprise. Prefer Autoscale unless you need
-# long-lived job state between idle pauses.
+run = ["bash", "scripts/prod_start.sh"]
 deploymentTarget = "autoscale"
+build = ["bash", "scripts/build.sh"]
 
 [[ports]]
 localPort = 5000
