@@ -27,8 +27,31 @@ body {
 
 .app { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
 
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.login-wrap {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-panel {
+  width: 100%;
+  max-width: 400px;
+}
+.login-panel h1 { margin: 0 0 4px; font-size: 22px; }
+.login-panel .sub { margin-bottom: 18px; }
+.login-panel button.primary { width: 100%; margin-top: 4px; }
+
 header h1 { margin: 0 0 4px; font-size: 24px; }
 header .sub { color: var(--muted); margin: 0 0 20px; }
+.app-header .sub { color: var(--muted); margin: 0; }
 
 .panel {
   background: var(--panel);

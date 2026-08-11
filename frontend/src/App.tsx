@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { buildDownloadUrl, createJob, getConfig, getJob } from "./api";
-import Filters from "./components/Filters";
+import Login, { clearAuth, isAuthenticated } from "./components/Login";
 import ResultsTable from "./components/ResultsTable";
-import { applyFilters, isShortlistingResult } from "./helpers";
-import { defaultFilters, type AppConfig, type FilterState, type JobStatus } from "./types";
+import type { AppConfig, JobStatus } from "./types";
 
 export default function App() {
+  const [authed, setAuthed] = useState(() => isAuthenticated());
   const [config, setConfig] = useState<AppConfig | null>(null);
   const [configError, setConfigError] = useState("");
 
@@ -17,17 +17,17 @@ export default function App() {
   const [job, setJob] = useState<JobStatus | null>(null);
   const [submitError, setSubmitError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [filters, setFilters] = useState<FilterState>(defaultFilters);
   const pollRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (!authed) return;
     getConfig()
       .then((c) => {
         setConfig(c);
         setConcurrency(c.default_concurrency);
       })
       .catch(() => setConfigError("Could not reach the backend at /api. Is the server running?"));
-  }, []);
+  }, [authed]);
 
   useEffect(() => {
     if (!job || job.status === "completed" || job.status === "failed") return;
@@ -50,7 +50,6 @@ export default function App() {
   async function handleSubmit() {
     setSubmitError("");
     setSubmitting(true);
-    setFilters(defaultFilters);
     try {
       const { job_id } = await createJob({
         mode: "dsa",
@@ -73,18 +72,32 @@ export default function App() {
     }
   }
 
+  function handleLogout() {
+    clearAuth();
+    setAuthed(false);
+    setJob(null);
+  }
+
   const liveRows = job?.live_results ?? [];
-  const showShortlistFilters = useMemo(() => isShortlistingResult(liveRows), [liveRows]);
-  const filteredRows = useMemo(() => applyFilters(liveRows, filters), [liveRows, filters]);
   const isDone = job?.status === "completed" || job?.status === "failed";
+
+  if (!authed) {
+    return <Login onSuccess={() => setAuthed(true)} />;
+  }
 
   return (
     <div className="app">
-      <header>
-        <h1>DSA Profile Extraction</h1>
-        <p className="sub">
-          Paste user IDs with LeetCode / CodeChef / Codeforces profile URLs to get solved counts — React · FastAPI
-        </p>
+      <header className="app-header">
+        <div>
+          <h1>DSA Profile Extraction</h1>
+          <p className="sub">
+            Paste user IDs with LeetCode / CodeChef / Codeforces profile URLs to get solved counts — React ·
+            FastAPI
+          </p>
+        </div>
+        <button type="button" className="btn-ghost" onClick={handleLogout}>
+          Sign out
+        </button>
       </header>
 
       {configError && <div className="error-box">{configError}</div>}
@@ -189,10 +202,8 @@ export default function App() {
 
           {isDone && (
             <div className="toolbar" style={{ marginTop: 14 }}>
-              <span className="hint">
-                Showing {filteredRows.length} of {liveRows.length} rows
-              </span>
-              <a className="btn-ghost" href={buildDownloadUrl(job.id, filters)}>
+              <span className="hint">Showing {liveRows.length} rows</span>
+              <a className="btn-ghost" href={buildDownloadUrl(job.id)}>
                 ⬇ Download CSV
               </a>
             </div>
@@ -200,14 +211,10 @@ export default function App() {
         </div>
       )}
 
-      {isDone && liveRows.length > 0 && (
-        <Filters filters={filters} onChange={setFilters} showShortlistFilters={showShortlistFilters} />
-      )}
-
       {liveRows.length > 0 && (
         <div className="panel">
           <h2>Results</h2>
-          <ResultsTable rows={isDone ? filteredRows : liveRows} />
+          <ResultsTable rows={liveRows} />
         </div>
       )}
     </div>

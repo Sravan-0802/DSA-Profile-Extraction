@@ -1,4 +1,4 @@
-import type { AppConfig, FilterState, JobStatus } from "./types";
+import type { AppConfig, JobStatus } from "./types";
 
 const BASE = "/api";
 
@@ -48,25 +48,6 @@ export async function getJob(jobId: string): Promise<JobStatus> {
   return res.json();
 }
 
-export function buildDownloadUrl(jobId: string, filters: FilterState): string {
-  const f = {
-    priority_bands: filters.priorityBands,
-    search: filters.search,
-    overall_min: filters.overall[0],
-    overall_max: filters.overall[1],
-    skills_min: filters.skills[0],
-    skills_max: filters.skills[1],
-    experience_min: filters.experience[0],
-    experience_max: filters.experience[1],
-    projects_min: filters.projects[0],
-    projects_max: filters.projects[1],
-    other_min: filters.other[0],
-    other_max: filters.other[1],
-    min_total_projects: filters.minTotalProjects,
-    min_internal_projects: filters.minInternalProjects,
-    min_external_projects: filters.minExternalProjects,
-    only_internal: filters.onlyInternal,
-    only_external: filters.onlyExternal,
-  };
-  return `${BASE}/jobs/${jobId}/download?filters=${encodeURIComponent(JSON.stringify(f))}`;
+export function buildDownloadUrl(jobId: string): string {
+  return `${BASE}/jobs/${jobId}/download`;
 }
