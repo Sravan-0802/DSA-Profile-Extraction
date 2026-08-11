@@ -1,0 +1,25 @@
+# Pins use lower bounds so pip resolves to wheels available for your Python
+# (tested on Python 3.14). Versions align with the existing DSA Extractor env.
+
+# Web framework
+fastapi>=0.115
+uvicorn[standard]>=0.34
+python-multipart>=0.0.20
+pydantic>=2.10
+python-dotenv>=1.0
+
+# HTTP / scraping
+requests>=2.32
+beautifulsoup4>=4.12
+lxml>=5.3
+
+# PDF / text extraction
+pdfplumber>=0.11.5
+PyMuPDF>=1.25
+
+# OCR (optional — requires the Tesseract binary installed separately)
+pillow>=11.0
+pytesseract>=0.3.13
+
+# Data / CSV
+pandas>=2.2
