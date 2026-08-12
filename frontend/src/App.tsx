@@ -91,7 +91,8 @@ export default function App() {
         <div>
           <h1>DSA Profile Extraction</h1>
           <p className="sub">
-            Paste user IDs with LeetCode / CodeChef / Codeforces profile URLs to get solved counts — React ·
+            {/* CodeChef scraping feature temporarily disabled — CodeChef removed from description */}
+            Paste user IDs with LeetCode / Codeforces profile URLs to get solved counts — React ·
             FastAPI
           </p>
         </div>
@@ -117,16 +118,17 @@ export default function App() {
             <label>
               Profile table{" "}
               <span className="hint">
-                — include header row: user_id, leetcode_profile_url_link, code_chef_profile_url_link,
-                codeforces_profile_link
+                {/* CodeChef scraping feature temporarily disabled — code_chef_profile_url_link column hidden from hint */}
+                — include header row: user_id, leetcode_profile_url_link, codeforces_profile_link
               </span>
             </label>
             <textarea
               value={pastedText}
               placeholder={
-                "user_id\tleetcode_profile_url_link\tcode_chef_profile_url_link\tcodeforces_profile_link\n" +
-                "uid-1\thttps://leetcode.com/u/alice/\thttps://www.codechef.com/users/alice\thttps://codeforces.com/profile/alice\n" +
-                "uid-2\thttps://leetcode.com/u/bob/\t-\t-"
+                /* CodeChef scraping feature temporarily disabled — CodeChef column removed from placeholder */
+                "user_id\tleetcode_profile_url_link\tcodeforces_profile_link\n" +
+                "uid-1\thttps://leetcode.com/u/alice/\thttps://codeforces.com/profile/alice\n" +
+                "uid-2\thttps://leetcode.com/u/bob/\t-"
               }
               onChange={(e) => setPastedText(e.target.value)}
             />
@@ -136,7 +138,8 @@ export default function App() {
             <label>
               CSV file{" "}
               <span className="hint">
-                — columns: user_id + leetcode / codechef / codeforces profile URL columns
+                {/* CodeChef scraping feature temporarily disabled — codechef column removed from CSV hint */}
+                — columns: user_id + leetcode / codeforces profile URL columns
               </span>
             </label>
             <input
@@ -151,9 +154,9 @@ export default function App() {
       <div className="panel">
         <h2>2 · Run</h2>
         <p className="hint" style={{ marginBottom: 14 }}>
-          Pulls LeetCode / CodeChef / Codeforces metrics (solved counts, Medium/Hard, ratings, recent
-          activity where publicly available). Download results as CSV when the run finishes. No AI key
-          required.
+          {/* CodeChef scraping feature temporarily disabled — CodeChef removed from run description */}
+          Pulls LeetCode / Codeforces metrics (solved counts, Medium/Hard, ratings, recent activity
+          where publicly available). Download results as CSV when the run finishes. No AI key required.
         </p>
 
         <div className="field">

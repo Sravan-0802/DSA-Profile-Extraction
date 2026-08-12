@@ -16,8 +16,9 @@ const LEADING = [
   "External Project Title", "External Projects Techstacks",
   "Internal Project Titles", "Internal Project Techstacks",
   "External Project Titles", "External Project Techstacks",
-  "GitHub Profile", "LeetCode Profile", "Codeforces Profile", "CodeChef Profile", "HackerRank Profile",
-  "LeetCode Solved", "Codeforces Solved", "CodeChef Solved",
+  // CodeChef scraping feature temporarily disabled — "CodeChef Profile" and "CodeChef Solved" removed from column ordering
+  "GitHub Profile", "LeetCode Profile", "Codeforces Profile", /* "CodeChef Profile", */ "HackerRank Profile",
+  "LeetCode Solved", "Codeforces Solved", /* "CodeChef Solved", */
 ];
 
 export function orderColumns(rows: Row[]): string[] {

@@ -1,9 +1,10 @@
 import { orderColumns } from "../helpers";
 import type { Row } from "../types";
 
+// CodeChef scraping feature temporarily disabled — "CodeChef Profile" removed from link columns
 const LINK_COLS = new Set([
   "Resume Link", "LinkedIn Link", "GitHub Link", "GitHub Profile", "LeetCode Profile",
-  "Codeforces Profile", "CodeChef Profile", "HackerRank Profile", "Profile Used",
+  "Codeforces Profile", /* "CodeChef Profile", */ "HackerRank Profile", "Profile Used",
 ]);
 
 function bandClass(band: string): string {
