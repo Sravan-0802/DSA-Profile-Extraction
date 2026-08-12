@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { buildDownloadUrl, createJob, getConfig, getJob } from "./api";
+import { stripCodechefFromCsvFile, stripCodechefFromPaste } from "./codechefGate";
 import Login, { clearAuth, isAuthenticated } from "./components/Login";
 import ResultsTable from "./components/ResultsTable";
 import type { AppConfig, JobStatus } from "./types";
@@ -51,6 +52,11 @@ export default function App() {
     setSubmitError("");
     setSubmitting(true);
     try {
+      // CodeChef scraping feature temporarily disabled — strip before API call so UI cannot trigger it.
+      const safeText = inputMethod === "text" ? stripCodechefFromPaste(pastedText) : "";
+      const safeCsv =
+        inputMethod === "csv" && csvFile ? await stripCodechefFromCsvFile(csvFile) : null;
+
       const { job_id } = await createJob({
         mode: "dsa",
         analysisType: "All Data",
@@ -60,8 +66,8 @@ export default function App() {
         companyName: "",
         concurrency,
         inputMethod,
-        pastedText,
-        csvFile,
+        pastedText: safeText,
+        csvFile: safeCsv,
       });
       const initial = await getJob(job_id);
       setJob(initial);

@@ -1,4 +1,5 @@
 import type { FilterState, Row } from "./types";
+import { isCodechefColumn } from "./codechefGate";
 
 const SKILL_SUFFIX = "_Probability";
 
@@ -28,6 +29,8 @@ export function orderColumns(rows: Row[]): string[] {
   const ordered: string[] = [];
   const seen = new Set<string>();
   const push = (k: string) => {
+    // CodeChef scraping feature temporarily disabled — never show CodeChef columns in the UI table.
+    if (isCodechefColumn(k)) return;
     if (present.has(k) && !seen.has(k)) {
       seen.add(k);
       ordered.push(k);

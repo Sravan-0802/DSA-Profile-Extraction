@@ -275,6 +275,8 @@ def collect_dsa_stats(profiles: dict[str, str]) -> dict[str, object]:
         out.update(fetch_leetcode_stats(get_username(profiles["leetcode"])))
     if profiles.get("codeforces"):
         out.update(fetch_codeforces_stats(get_username(profiles["codeforces"])))
+    # CodeChef scraping feature temporarily disabled in the UI.
+    # Backend scrape (fetch_codechef_stats) is kept intact for later re-enable.
     if profiles.get("codechef"):
         out.update(fetch_codechef_stats(get_username(profiles["codechef"])))
     return out
